@@ -9,11 +9,20 @@ use PhpParser\Node\Stmt\Return_;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
 
-        return view('users.index', compact('users'));
+
+        
+        $search = $request->search;
+        $users = User::where(function ($query) use ($search){
+                if($search){
+                    $query->where('name','=', $search);
+                    $query->orWhere('email','LIKE',"%{$search}%"); 
+                }
+            })->paginate(3);
+            
+            return view('users.index', compact('users'));
     }
 
     public function show($id)
@@ -61,4 +70,14 @@ class UserController extends Controller
         return redirect()->route('users.index');   
 
     }
+
+    public function destroy($id)
+    {
+        if(!$user = User::find($id))
+        return redirect()->route('users.index');
+
+        $user->delete();
+        return redirect()->route('users.index');
+    }
+
 }
