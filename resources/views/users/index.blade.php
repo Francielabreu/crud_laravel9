@@ -3,14 +3,25 @@
 
 
 @section('content')
-<h1 class="text-4xl font-bold leading-tigh py-4 uppercase text-center">Listagem de Usuarios</h1>
+<h1 class="text-4xl font-bold leading-tigh py-4 uppercase text-center uppercase">Listagem de Usuarios</h1>
+
+<form action="{{ route('users.index') }}" method="get">
+  @csrf
+ 
+    <a href="{{ route('users.create') }} " class="bg-orange-400 rounded text-white px-3 py-1 uppercase">Novo Usuario</a>
+
+    <input type="text" name="search" placeholder="Pesquisar" class="text-white px-3 py-1 uppercase">
+    <button type="submit" class="bg-orange-400 rounded text-white px-3 py-1 uppercase">Pesquisar</button>
+
+</form>
+
 
 <div class="py-5">
-  <a href="{{ route('users.create') }} " class="bg-orange-400 rounded text-white px-3 py-1 text-lg">Novo Usuario</a>
+  
 </div>
 
 
-<table class="min-w-full leading-normal shadow-md rounded-lg overflow-hidden text-center">
+<table class="min-w-full leading-normal shadow-md rounded-lg overflow-hidden text-center uppercase">
     <thead>
       <tr>
         <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider text-center">ID</th>
@@ -36,5 +47,11 @@
       @endforeach
     </tbody>
   </table>
+
+  <div class="py-4">
+    {{ $users->appends([
+      'search' => request()->get('search', '')
+  ])->links() }}
+  </div>
 
 @endsection
