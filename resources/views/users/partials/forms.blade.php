@@ -2,6 +2,13 @@
 @csrf
 
 <div class="py-2 space-y-4">
+
+    <div class="space-y-1">
+        <label class="text-gray-600 font-semibold uppercase">Foto</label>
+        <input type="file" name="image"
+            class="border border-gray-400 px-4 py-1 rounded block w-full">
+    </div>
+
     <div class="space-y-1">
         <label class="text-gray-600 font-semibold uppercase">Nome</label>
         <input type="text" name="name" placeholder="Informe seu Nome"

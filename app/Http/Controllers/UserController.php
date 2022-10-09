@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUpdateFormRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Stmt\Return_;
 
 class UserController extends Controller
@@ -40,8 +41,14 @@ class UserController extends Controller
 
     public function store(StoreUpdateFormRequest $request)
     {
-        $data = $request->all();
+        $data = $request->all();      
+
         $data['password'] = bcrypt($request->password);
+
+        if ($request->image){
+            $data['image'] = $request->image->store('users');
+            
+        }
         User::create($data);
 
         return redirect()->route('users.index');
@@ -65,8 +72,17 @@ class UserController extends Controller
         
         if($request->password)
             $data['password'] = bcrypt($request->password);
-        $user->update($data);
+       
 
+        
+        if($request->image){
+            if($user->image && Storage::exists($user->image)){
+                Storage::delete($user->image);
+            }
+        }
+        $data['image'] = $request->image->store('users');
+
+        $user->update($data);
         return redirect()->route('users.index');   
 
     }
