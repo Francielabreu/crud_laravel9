@@ -21,7 +21,7 @@ class UserController extends Controller
                     $query->where('name','=', $search);
                     $query->orWhere('email','LIKE',"%{$search}%"); 
                 }
-            })->paginate(3);
+            })->paginate(6);
             
             return view('users.index', compact('users'));
     }

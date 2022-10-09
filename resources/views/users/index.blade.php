@@ -10,7 +10,7 @@
  
     <a href="{{ route('users.create') }} " class="bg-orange-400 rounded text-white px-3 py-1 uppercase">Novo Usuario</a>
 
-    <input type="text" name="search" placeholder="Pesquisar" class="text-white px-3 py-1 uppercase">
+    <input type="text" name="search" placeholder="Pesquisar" class="text-white px-3 py-1 uppercase border rounded">
     <button type="submit" class="bg-orange-400 rounded text-white px-3 py-1 uppercase">Pesquisar</button>
 
 </form>
